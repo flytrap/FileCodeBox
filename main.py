@@ -125,7 +125,7 @@ async def robots():
     return HTMLResponse(content=settings.robotsText, media_type="text/plain")
 
 
-@app.post("/")
+@app.post("/api/config")
 async def get_config():
     return APIResponse(
         detail={
@@ -134,7 +134,11 @@ async def get_config():
             "explain": settings.page_explain,
             "uploadSize": settings.uploadSize,
             "expireStyle": settings.expireStyle,
-            "enableChunk": settings.enableChunk if settings.file_storage == "local" and settings.enableChunk else 0,
+            "enableChunk": (
+                settings.enableChunk
+                if settings.file_storage == "local" and settings.enableChunk
+                else 0
+            ),
             "openUpload": settings.openUpload,
             "notify_title": settings.notify_title,
             "notify_content": settings.notify_content,
